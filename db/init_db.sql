@@ -1,0 +1,5 @@
+CREATE DATABASE tododb;
+
+CREATE USER todouser WITH PASSWORD 'todo';
+
+GRANT ALL PRIVILEGES ON DATABASE tododb TO todouser;
