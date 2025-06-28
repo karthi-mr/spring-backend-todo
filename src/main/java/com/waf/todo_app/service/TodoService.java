@@ -3,6 +3,7 @@ package com.waf.todo_app.service;
 import com.waf.todo_app.model.Todo;
 import com.waf.todo_app.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class TodoService {
     }
 
     public List<Todo> getAll() {
-        return todoRepository.findAll();
+        return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     public Todo save(Todo todo) {
@@ -32,6 +33,13 @@ public class TodoService {
 
     public void delete(Long id) {
         todoRepository.deleteById(id);
+    }
+
+    public void updateTodoStatus(Long id) {
+        todoRepository.findById(id).map(todo -> {
+            todo.setCompleted(!todo.isCompleted());
+            return todoRepository.save(todo);
+        }).orElseThrow(() -> new RuntimeException("Todo not found!"));
     }
 
     public Todo update(Long id, Todo updatedTodo) {

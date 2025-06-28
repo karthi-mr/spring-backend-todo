@@ -38,4 +38,10 @@ public class TodoController {
     public void deleteTodo(@PathVariable Long id) {
         todoService.delete(id);
     }
+
+    @PostMapping("/status/{id}")
+    public void updateTodoStatus(@PathVariable Long id) {
+        System.out.println("Updating the status");
+        todoService.updateTodoStatus(id);
+    }
 }
